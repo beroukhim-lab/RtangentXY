@@ -1,0 +1,26 @@
+Package: RtangentXY
+Title: TangentXY by the Beroukhim Lab
+Version: 0.0.1
+Authors@R: 
+    c(person(given = "Siyun",
+             family = "Lee",
+             email = "siyun@broadinstitute.org", 
+             role = c("aut", "cre"),
+             comment = c(ORCID = "0009-0005-5130-5212")),
+      person(given = "Greg",
+             family = "Raskind",
+             email = "graskind@g.harvard.edu", 
+             role = "aut"),
+      person(given = "Kei",
+             family = "Enomoto",
+             email = "Kei_Enomoto@dfci.harvard.edu", 
+             role = "aut"),
+      person(given = "Rameen",
+             family = "Beroukhim",
+             email = "Rameen_Beroukhim@dfci.harvard.edu", 
+             role = c("cph", "fnd")))
+Description: This is the package implementation of TangentXY, a sex-informed copy number inference alogirhtm, which extends Tangent, as published in 2022 (PMID: 36040167).
+License: GPL (>= 2)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
