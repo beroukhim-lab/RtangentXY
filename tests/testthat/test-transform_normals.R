@@ -5,5 +5,5 @@ test_that("transform_normals() correctly performs linear transformation on input
   tn_test <- transform_normals(sif_path, normal_path)
 
   tn_expect_out <- readRDS(testthat::test_path("dummydata", "normal_log2RCN_linearTrans.rds"))
-  expect_equal(tn_test, tn_expect_out)
+  testthat::expect_equal(tn_test, tn_expect_out)
 })
