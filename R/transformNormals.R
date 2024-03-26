@@ -20,10 +20,11 @@
 #' @export
 
 transform_normals <- function(sif_filepath, ndf_filepath) {
+  cat('\nTransforming normals ...\n')
   # Read in the files from filepaths
   sif <- readr::read_delim(sif_filepath, progress=FALSE, show_col_types=FALSE)
   n.df <- readr::read_delim(ndf_filepath, progress=FALSE, show_col_types=FALSE) %>%
-    column_to_rownames('locus')
+    tibble::column_to_rownames('locus')
 
   ## Linear transformation only on male chrX in normal samples
   female.normal.samples <- sif %>%
