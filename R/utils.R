@@ -11,3 +11,6 @@
 
 # We need to add global variables, these refer to the set column names input
 utils::globalVariables(c("gender", "locus", "sample.id", "type"))
+
+# We need to add a global variable for ".", as this is used in dplyr
+utils::globalVariables(c("."))

@@ -14,11 +14,14 @@
 #'
 #' @import readr
 #' @import dplyr
+#' @import tibble
 #' @export
 
 run_svd <- function(sif_filepath, ndf_filepath) {
+  cat('\nRunning SVD ...\n')
   sif <- readr::read_delim(sif_filepath, progress=FALSE, show_col_types=FALSE)
-  n.lt.df <- transform_normals(sif_filepath, ndf_filepath) %>% column_to_rownames('locus')
+  n.lt.df <- transform_normals(sif_filepath, ndf_filepath) %>%
+    tibble::column_to_rownames('locus')
 
   n.autox <- n.lt.df[!grepl('^Y', rownames(n.lt.df)),] %>%
     as.matrix()
