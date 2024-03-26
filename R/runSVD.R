@@ -8,7 +8,7 @@
 #' Conduct singular value decomposition (SVD) in preparation for input into the Tangent algorithm
 #'
 #' @param sif_filepath The filepath for the sample information file
-#' @param nltdf_filepath The filepath for the normal signal matrix file that has been linearly transformed by transform_normals()
+#' @param ndf_filepath The filepath for the normal signal matrix file
 #'
 #' @return A matrix with the male X chromosomes linearly transformed
 #'
@@ -16,10 +16,9 @@
 #' @import dplyr
 #' @export
 
-run_svd <- function(sif_filepath, nltdf_filepath) {
+run_svd <- function(sif_filepath, ndf_filepath) {
   sif <- readr::read_delim(sif_filepath, progress=FALSE, show_col_types=FALSE)
-  n.lt.df <- readr::read_delim(nltdf_filepath, progress=FALSE, show_col_types=FALSE) %>%
-    column_to_rownames('locus')
+  n.lt.df <- transform_normals(sif_filepath, ndf_filepath) %>% column_to_rownames('locus')
 
   n.autox <- n.lt.df[!grepl('^Y', rownames(n.lt.df)),] %>%
     as.matrix()

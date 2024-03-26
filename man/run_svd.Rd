@@ -4,12 +4,12 @@
 \alias{run_svd}
 \title{Conduct singular value decomposition (SVD) in preparation for input into the Tangent algorithm}
 \usage{
-run_svd(sif_filepath, nltdf_filepath)
+run_svd(sif_filepath, ndf_filepath)
 }
 \arguments{
 \item{sif_filepath}{The filepath for the sample information file}
 
-\item{nltdf_filepath}{The filepath for the normal signal matrix file that has been linearly transformed by transform_normals()}
+\item{ndf_filepath}{The filepath for the normal signal matrix file}
 }
 \value{
 A matrix with the male X chromosomes linearly transformed
