@@ -9,8 +9,11 @@
 
 # Note, all of the functions in this file are used internally
 
-# We need to add global variables, these refer to the set column names input
-utils::globalVariables(c("gender", "locus", "sample.id", "type"))
+# We need to add global variables, these refer to the raw inputs column names
+utils::globalVariables(c("gender", "locus", "sample.id", "patient.id", "type", "start", "end", "arm"))
+
+# We need to add global variables used to generate plots
+utils::globalVariables(c("signal"))
 
 # We need to add a global variable for ".", as this is used in dplyr
 utils::globalVariables(c("."))
