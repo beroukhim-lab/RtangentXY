@@ -13,7 +13,7 @@
 utils::globalVariables(c("gender", "locus", "sample.id", "patient.id", "type", "start", "end", "arm"))
 
 # We need to add global variables used to generate plots
-utils::globalVariables(c("signal", "d"))
+utils::globalVariables(c("signal", "d", "chr", "arm.median", "lf", "metric", "value"))
 
 # We need to add a global variable for ".", as this is used in dplyr
 utils::globalVariables(c("."))

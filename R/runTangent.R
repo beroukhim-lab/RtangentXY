@@ -12,7 +12,7 @@
 #' @param tdf_filepath The filepath for the tumor signal matrix file
 #' @param n_latent An integer representing the number of latent factors to reconstruct normal subspace
 #'
-#' @return A normalized tumor signal matrix
+#' @returns A normalized tumor signal matrix
 #'
 #' @import readr
 #' @import dplyr
@@ -115,7 +115,6 @@ run_tangent <- function(sif_filepath, ndf_filepath, tdf_filepath, n_latent) {
   T.norm <- T.norm %>%
     as.data.frame() %>%
     tibble::rownames_to_column('locus')
-
 
   return(T.norm)
 }
