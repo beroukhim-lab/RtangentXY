@@ -10,7 +10,7 @@
 #' @param sif_filepath The filepath for the sample information file
 #' @param ndf_filepath The filepath for the normal signal matrix file
 #'
-#' @return A matrix with the male X chromosomes linearly transformed
+#' @returns A matrix with the male X chromosomes linearly transformed
 #'
 #' @import readr
 #' @import dplyr

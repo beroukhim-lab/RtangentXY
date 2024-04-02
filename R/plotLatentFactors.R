@@ -10,7 +10,7 @@
 #' @param n_svd The returned matrix decomposition of `run_svd()`
 #' @param top_100 A boolean. Set to TRUE if interested in the top 100 latent factors. If set to TRUE and if there are fewer than 100 latent factors, an error will be thrown
 #'
-#' @return A boolean of whether the plot was successfully generated.
+#' @returns A boolean of whether the plot was successfully generated.
 #'
 #' @import dplyr
 #' @import ggplot2
@@ -29,7 +29,7 @@ plot_latent_factors <- function(n_svd, top_100 = FALSE) {
 
   if (top_100) {
     if (nrow(d.df) >= 100) {
-      g <- ggplot2::ggplot(d.df, aes(x=n, y=d)) +
+      g <- ggplot2::ggplot(d.df, ggplot2::aes(x=n, y=d)) +
         ggplot2::geom_line() +
         ggplot2::scale_x_continuous(breaks=scales::pretty_breaks()) +
         ggplot2::labs(title='Importance of latent factors', y='r (Importance)', col='# of normals') +
@@ -44,7 +44,7 @@ plot_latent_factors <- function(n_svd, top_100 = FALSE) {
     }
 
   } else{
-    g <- ggplot2::ggplot(d.df, aes(x=n, y=d)) +
+    g <- ggplot2::ggplot(d.df, ggplot2::aes(x=n, y=d)) +
       ggplot2::geom_line() +
       ggplot2::scale_x_continuous(breaks=scales::pretty_breaks()) +
       ggplot2::labs(title='Importance of latent factors', y='r (Importance)', col='# of normals') +

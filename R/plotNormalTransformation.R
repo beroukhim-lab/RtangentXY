@@ -11,7 +11,7 @@
 #' @param ndf_filepath The filepath for the normal signal matrix file used to create `ndf_transformed`
 #' @param ndf_transformed The returned transformed dataframe from `transform_normals()`
 #'
-#' @return A dataframe of the plotted data
+#' @returns A dataframe of the plotted data
 #'
 #' @import readr
 #' @import dplyr
@@ -45,8 +45,8 @@ plot_normal_transformation <- function(sif_filepath, ndf_filepath, ndf_transform
     dplyr::mutate(transformation=factor(.$transformation, levels=c('Before transformation', 'After transformation'))) %>%
     dplyr::mutate(gender=stringr::str_to_title(gender))
 
-  g <- ggplot2::ggplot(signal.x, aes(x=signal, group=sample.id)) +
-    ggplot2::geom_density(aes(fill=gender), alpha=0.25) +
+  g <- ggplot2::ggplot(signal.x, ggplot2::aes(x=signal, group=sample.id)) +
+    ggplot2::geom_density(ggplot2::aes(fill=gender), alpha=0.25) +
     ggplot2::geom_vline(xintercept=0, col='red', linetype='dashed') +
     ggplot2::geom_vline(xintercept=-1, col='blue', linetype='dashed') +
     ggplot2::coord_flip() +
