@@ -5,7 +5,10 @@
 ### Dependencies: Check DESCRIPTION file
 ### See https://github.com/beroukhim-lab/RtangentXY for more information
 
-#' This code runs the TangentXY algorithm, which isolates the tumor signal using a set of normals.
+#' Run the TangentXY algorithm
+#'
+#' @description
+#' This function isolates isolates the tumor signal usng a set of normal signals by running the Tangent algorithm.
 #'
 #' @param sif_filepath The filepath for the sample information file
 #' @param ndf_filepath The filepath for the normal signal matrix file

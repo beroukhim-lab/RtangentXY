@@ -5,7 +5,10 @@
 ### Dependencies: Check DESCRIPTION file
 ### See https://github.com/beroukhim-lab/RtangentXY for more information
 
-#' Conduct linear transformation on the CN signals of the male X chromosomes
+#' Transform Chromosome X signals
+#'
+#' @description
+#' Conduct linear transformation on the CN signals of the male X chromosomes.
 #'
 #' @param sif_filepath The filepath for the sample information file
 #' @param ndf_filepath The filepath for the normal signal matrix file

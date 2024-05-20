@@ -2,7 +2,7 @@
 % Please edit documentation in R/runTangent.R
 \name{run_tangent}
 \alias{run_tangent}
-\title{This code runs the TangentXY algorithm, which isolates the tumor signal using a set of normals.}
+\title{Run the TangentXY algorithm}
 \usage{
 run_tangent(sif_filepath, ndf_filepath, tdf_filepath, n_latent)
 }
@@ -19,5 +19,5 @@ run_tangent(sif_filepath, ndf_filepath, tdf_filepath, n_latent)
 A normalized tumor signal matrix
 }
 \description{
-This code runs the TangentXY algorithm, which isolates the tumor signal using a set of normals.
+This function isolates isolates the tumor signal usng a set of normal signals by running the Tangent algorithm.
 }

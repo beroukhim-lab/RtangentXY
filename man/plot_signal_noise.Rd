@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotSignalNoise.R
 \name{plot_signal_noise}
 \alias{plot_signal_noise}
-\title{For each of the given number of latent factors, this function runs \code{run_tangent()} and plots the signal and noise data for each latent factor.}
+\title{Plot signal and noise data}
 \usage{
 plot_signal_noise(
   sif_filepath,

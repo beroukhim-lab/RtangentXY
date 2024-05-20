@@ -5,7 +5,11 @@
 ### Dependencies: Check DESCRIPTION file
 ### See https://github.com/beroukhim-lab/RtangentXY for more information
 
-#' Conduct singular value decomposition (SVD) in preparation for input into the Tangent algorithm
+#' Conduct SVD
+#'
+#' @description
+#' Conduct singular value decomposition (SVD) on the normal signals in
+#' preparation for input into the Tangent algorithm
 #'
 #' @param sif_filepath The filepath for the sample information file
 #' @param ndf_filepath The filepath for the normal signal matrix file

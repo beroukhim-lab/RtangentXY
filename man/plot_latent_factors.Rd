@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotLatentFactors.R
 \name{plot_latent_factors}
 \alias{plot_latent_factors}
-\title{Plots the importance of latent factors  \code{run_svd()}}
+\title{Plots importance of latent factors}
 \usage{
 plot_latent_factors(n_svd, top_100 = FALSE)
 }
@@ -15,5 +15,6 @@ plot_latent_factors(n_svd, top_100 = FALSE)
 A boolean of whether the plot was successfully generated.
 }
 \description{
-Plots the importance of latent factors  \code{run_svd()}
+This code should be used to visualize the importance of the latent factors of
+the matrix decomposition performed by \code{run_svd()}.
 }
