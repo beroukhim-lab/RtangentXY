@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotNormalTransformation.R
 \name{plot_normal_transformation}
 \alias{plot_normal_transformation}
-\title{Plots the signal distribution of Chromosome X after the linear transformation done by \code{transform_normals()}}
+\title{Plot Chromosome X transformation}
 \usage{
 plot_normal_transformation(sif_filepath, ndf_filepath, ndf_transformed)
 }
@@ -17,5 +17,6 @@ plot_normal_transformation(sif_filepath, ndf_filepath, ndf_transformed)
 A dataframe of the plotted data
 }
 \description{
-Plots the signal distribution of Chromosome X after the linear transformation done by \code{transform_normals()}
+Plots the signal distribution of Chromosome X after the linear transformation
+done by \code{transform_normals()}
 }

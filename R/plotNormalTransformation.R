@@ -5,7 +5,11 @@
 ### Dependencies: Check DESCRIPTION file
 ### See https://github.com/beroukhim-lab/RtangentXY for more information
 
-#' Plots the signal distribution of Chromosome X after the linear transformation done by `transform_normals()`
+#' Plot Chromosome X transformation
+#'
+#' @description
+#' Plots the signal distribution of Chromosome X after the linear transformation
+#' done by `transform_normals()`
 #'
 #' @param sif_filepath The filepath for the sample information file used to create `ndf_transformed`
 #' @param ndf_filepath The filepath for the normal signal matrix file used to create `ndf_transformed`

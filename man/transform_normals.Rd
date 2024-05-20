@@ -2,7 +2,7 @@
 % Please edit documentation in R/transformNormals.R
 \name{transform_normals}
 \alias{transform_normals}
-\title{Conduct linear transformation on the CN signals of the male X chromosomes}
+\title{Transform Chromosome X signals}
 \usage{
 transform_normals(sif_filepath, ndf_filepath)
 }
@@ -15,5 +15,5 @@ transform_normals(sif_filepath, ndf_filepath)
 A matrix with the male X chromosomes linearly transformed
 }
 \description{
-Conduct linear transformation on the CN signals of the male X chromosomes
+Conduct linear transformation on the CN signals of the male X chromosomes.
 }

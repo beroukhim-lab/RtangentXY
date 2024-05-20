@@ -2,7 +2,7 @@
 % Please edit documentation in R/runSVD.R
 \name{run_svd}
 \alias{run_svd}
-\title{Conduct singular value decomposition (SVD) in preparation for input into the Tangent algorithm}
+\title{Conduct SVD}
 \usage{
 run_svd(sif_filepath, ndf_filepath)
 }
@@ -15,5 +15,6 @@ run_svd(sif_filepath, ndf_filepath)
 A matrix with the male X chromosomes linearly transformed
 }
 \description{
-Conduct singular value decomposition (SVD) in preparation for input into the Tangent algorithm
+Conduct singular value decomposition (SVD) on the normal signals in
+preparation for input into the Tangent algorithm
 }

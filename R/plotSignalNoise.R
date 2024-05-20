@@ -5,6 +5,9 @@
 ### Dependencies: Check DESCRIPTION file
 ### See https://github.com/beroukhim-lab/RtangentXY for more information
 
+#' Plot signal and noise data
+#'
+#' @description
 #' For each of the given number of latent factors, this function runs `run_tangent()` and plots the signal and noise data for each latent factor.
 #'
 #' @param sif_filepath The filepath for the sample information file

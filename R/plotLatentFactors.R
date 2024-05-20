@@ -5,7 +5,11 @@
 ### Dependencies: Check DESCRIPTION file
 ### See https://github.com/beroukhim-lab/RtangentXY for more information
 
-#' Plots the importance of latent factors  `run_svd()`
+#' Plots importance of latent factors
+#'
+#' @description
+#' This code should be used to visualize the importance of the latent factors of
+#' the matrix decomposition performed by `run_svd()`.
 #'
 #' @param n_svd The returned matrix decomposition of `run_svd()`
 #' @param top_100 A boolean. Set to TRUE if interested in the top 100 latent factors. If set to TRUE and if there are fewer than 100 latent factors, an error will be thrown
