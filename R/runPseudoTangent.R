@@ -10,6 +10,7 @@
 #' @description
 #' Pseudotangent also isolates the tumor signals using the Tangent algorithm,
 #' but it should be used when the set of normals are particularly non-representative.
+#' NOTE: all signal file rows should be in order (ie. from 1-22, X, Y).
 #'
 #' @param sif_filepath The filepath for the sample information file
 #' @param ndf_filepath The filepath for the normal signal matrix file
@@ -27,5 +28,11 @@
 #' @export
 
 run_pseudotangent <- function(sif_filepath, ndf_filepath, tdf_filepath, n_latent_init, n_latent_tsvd) {
+  # Step 1: Run TangentXY on a small set of normals
+  cat('\nRunning Tangent on initial set of normals...\n')
+  step1_tangent_out <- run_tangent(sif_filepath, ndf_filepath, tdf_filepath, n_latent_init)
+
+  # Step 2: Run CBS on the TangentXY outputs to get the tentative CN profile
+  cat('\nRunning CBS on inital Tangent output...\n')
   return(1)
 }

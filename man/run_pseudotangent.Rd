@@ -29,4 +29,5 @@ A normalized tumor signal matrix
 \description{
 Pseudotangent also isolates the tumor signals using the Tangent algorithm,
 but it should be used when the set of normals are particularly non-representative.
+NOTE: all signal file rows should be in order (ie. from 1-22, X, Y).
 }
