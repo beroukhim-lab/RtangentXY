@@ -4,14 +4,14 @@
 \alias{convert_cbs}
 \title{Converts CBS output to signal format}
 \usage{
-convert_cbs(cbs_out, sif_filepath, tdf_filepath)
+convert_cbs(cbs_out, sif_df, tsig_df)
 }
 \arguments{
 \item{cbs_out}{The output from \code{runCBS()} (i.e. list of outputs from \code{DNAcopy::segment()})}
 
-\item{sif_filepath}{The filepath for the sample information file}
+\item{sif_df}{The dataframe of or the filepath for the sample information file}
 
-\item{tdf_filepath}{The filepath for the tumor signal matrix file}
+\item{tsig_df}{The dataframe of or the filepath for the tumor signal matrix file}
 }
 \value{
 A normalized tumor signal matrix

@@ -42,7 +42,7 @@ row.cbs <- function(r, data.type, alpha, min.width) {
 
   cna <- DNAcopy::CNA(r, chr, start, data.type = data.type)
   smoothed_cna <- DNAcopy::smooth.CNA(cna)
-  segmented_cna <- DNAcopy::segment(smoothed_cna, verbose = 1, alpha = alpha, min.width = min.width)
+  segmented_cna <- DNAcopy::segment(smoothed_cna, verbose = 0, alpha = alpha, min.width = min.width)
 
   return(segmented_cna)
 }

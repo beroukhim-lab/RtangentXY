@@ -14,8 +14,8 @@
 #' computation between the CBS outputs and signal files simple.
 #'
 #' @param cbs_out The output from `runCBS()` (i.e. list of outputs from `DNAcopy::segment()`)
-#' @param sif_filepath The filepath for the sample information file
-#' @param tdf_filepath The filepath for the tumor signal matrix file
+#' @param sif_df The dataframe of or the filepath for the sample information file
+#' @param tsig_df The dataframe of or the filepath for the tumor signal matrix file
 #'
 #' @returns A normalized tumor signal matrix
 #'
@@ -25,16 +25,19 @@
 #' @export
 
 # The following code is called by run_pseudotangent() to convert the run_cbs() output tdf_file format
-convert_cbs <- function(cbs_out, sif_filepath, tdf_filepath) {
+convert_cbs <- function(cbs_out, sif_df, tsig_df) {
+
   # Note: when the CBS was conducted, we only took into account the start (location)
+  # Load data
+  # We're going to use tumor signal file format to create the output cbs
+  if (inherits(sif_df, "character")) {
+    sif <- readr::read_delim(sif_df, progress=FALSE, show_col_types=FALSE)
+  } else { sif <- sif_df }
 
-  # Open files. We're going to use tumor signal file format to create the output cbs
-  sif <- readr::read_delim(sif_filepath, progress=FALSE, show_col_types=FALSE)
-  sif <- as.data.frame(sif)
-
-  tumor_signal_data <- readr::read_delim(tdf_filepath, progress=FALSE, show_col_types=FALSE) %>%
-    tibble::column_to_rownames('locus')
-  tumor_signal_data <- as.data.frame(tumor_signal_data)
+  if (inherits(tsig_df, "character")) {
+    tumor_signal_data <- readr::read_delim(tsig_df, progress=FALSE, show_col_types=FALSE) %>%
+      tibble::column_to_rownames('locus')
+  } else { tumor_signal_data <- tsig_df }
 
   cbs_df_list <- list()
 
