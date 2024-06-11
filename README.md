@@ -13,11 +13,25 @@ An easy-to-use package containing functions that run TangentXY and Pseudotangent
 
 Check the DESCRIPTION file for the list of all imports. Installing the latest version of `tidyverse` should take care of many of these package imports. Check [this link](https://cran.r-project.org/web/packages/githubinstall/vignettes/githubinstall.html) for instructions on installing an R package from GitHub.
 
+## Expected Inputs
+
+SIF File
+
+PIF File
+
+Tumor Signal File
+
+Normal Signal File
+
 ## Usage
 
 Once this package is installed, load the package by calling:
 
 `library(RtangentXY)`
+
+`run_tangent()`
+
+`run_pseudptangent()`
 
 ## Support
 
