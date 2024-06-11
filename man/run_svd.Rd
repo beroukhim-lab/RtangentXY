@@ -4,12 +4,12 @@
 \alias{run_svd}
 \title{Conduct SVD}
 \usage{
-run_svd(sif_filepath, ndf_filepath)
+run_svd(sif_df, nsig_df)
 }
 \arguments{
-\item{sif_filepath}{The filepath for the sample information file}
+\item{sif_df}{The dataframe of or the filepath for the sample information file}
 
-\item{ndf_filepath}{The filepath for the normal signal matrix file}
+\item{nsig_df}{The dataframe of or the filepath for the normal signal matrix file}
 }
 \value{
 A matrix with the male X chromosomes linearly transformed

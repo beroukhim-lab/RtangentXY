@@ -5,23 +5,34 @@
 \title{Runs the Pseudotangent pipeline}
 \usage{
 run_pseudotangent(
-  sif_filepath,
-  ndf_filepath,
-  tdf_filepath,
+  sif_df,
+  nsig_df,
+  tsig_df,
   n_latent_init,
-  n_latent_tsvd
+  cbs_dt = "logratio",
+  cbs_a = 0.005,
+  cbs_mw = 3,
+  num_partitions,
+  partition_seed = 37,
+  n_latent_part
 )
 }
 \arguments{
-\item{sif_filepath}{The filepath for the sample information file}
+\item{sif_df}{The dataframe of or the filepath for the sample information file}
 
-\item{ndf_filepath}{The filepath for the normal signal matrix file}
+\item{nsig_df}{The dataframe of or the filepath for the normal signal matrix file}
 
-\item{tdf_filepath}{The filepath for the tumor signal matrix file}
+\item{tsig_df}{The dataframe of or the filepath for the tumor signal matrix file}
 
-\item{n_latent_init}{An integer representing the number of latent factors to reconstruct normal subspace}
+\item{n_latent_init}{The number of latent factors to reconstruct the initial normal subspace}
 
-\item{n_latent_tsvd}{An integer representing the number of latent factors for each of the runs}
+\item{cbs_dt}{The data type parameter for the function \code{run_cbs()}}
+
+\item{cbs_a}{The alpha parameter for the function \code{run_cbs()}}
+
+\item{cbs_mw}{The minimum width parameter for the function \code{run_cbs()}}
+
+\item{n_latent_part}{The number of latent factors for each of the partition runs}
 }
 \value{
 A normalized tumor signal matrix

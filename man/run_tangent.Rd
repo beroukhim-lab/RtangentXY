@@ -4,14 +4,14 @@
 \alias{run_tangent}
 \title{Run the TangentXY algorithm}
 \usage{
-run_tangent(sif_filepath, ndf_filepath, tdf_filepath, n_latent)
+run_tangent(sif_df, nsig_df, tsig_df, n_latent)
 }
 \arguments{
-\item{sif_filepath}{The filepath for the sample information file}
+\item{sif_df}{The dataframe of or the filepath for the sample information file}
 
-\item{ndf_filepath}{The filepath for the normal signal matrix file}
+\item{nsig_df}{The dataframe of or the filepath for the normal signal matrix file}
 
-\item{tdf_filepath}{The filepath for the tumor signal matrix file}
+\item{tsig_df}{The dataframe of or the filepath for the tumor signal matrix file}
 
 \item{n_latent}{An integer representing the number of latent factors to reconstruct normal subspace}
 }

@@ -4,12 +4,12 @@
 \alias{plot_normal_transformation}
 \title{Plot Chromosome X transformation}
 \usage{
-plot_normal_transformation(sif_filepath, ndf_filepath, ndf_transformed)
+plot_normal_transformation(sif_df, nsig_df, ndf_transformed)
 }
 \arguments{
-\item{sif_filepath}{The filepath for the sample information file used to create \code{ndf_transformed}}
+\item{sif_df}{The dataframe of or the filepath for the sample information file used to create \code{ndf_transformed}}
 
-\item{ndf_filepath}{The filepath for the normal signal matrix file used to create \code{ndf_transformed}}
+\item{nsig_df}{The dataframe of or the filepath for the normal signal matrix file used to create \code{ndf_transformed}}
 
 \item{ndf_transformed}{The returned transformed dataframe from \code{transform_normals()}}
 }

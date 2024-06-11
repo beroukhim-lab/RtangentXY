@@ -4,12 +4,12 @@
 \alias{transform_normals}
 \title{Transform Chromosome X signals}
 \usage{
-transform_normals(sif_filepath, ndf_filepath)
+transform_normals(sif_df, nsig_df)
 }
 \arguments{
-\item{sif_filepath}{The filepath for the sample information file}
+\item{sif_df}{The dataframe of or the filepath for the sample information file}
 
-\item{ndf_filepath}{The filepath for the normal signal matrix file}
+\item{nsig_df}{The dataframe of or the filepath for the normal signal matrix file}
 }
 \value{
 A matrix with the male X chromosomes linearly transformed

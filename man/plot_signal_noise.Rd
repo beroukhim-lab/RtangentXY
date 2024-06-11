@@ -4,23 +4,16 @@
 \alias{plot_signal_noise}
 \title{Plot signal and noise data}
 \usage{
-plot_signal_noise(
-  sif_filepath,
-  pif_filepath,
-  ndf_filepath,
-  tdf_filepath,
-  n_latents,
-  cores = 2
-)
+plot_signal_noise(sif_df, pif_df, nsig_df, tsig_df, n_latents, cores = 2)
 }
 \arguments{
-\item{sif_filepath}{The filepath for the sample information file}
+\item{sif_df}{The dataframe of or the filepath for the sample information file}
 
-\item{pif_filepath}{The filepath for the probe information file}
+\item{pif_df}{The dataframe of or the filepath for the probe information file}
 
-\item{ndf_filepath}{The filepath for the normal signal matrix file}
+\item{nsig_df}{The dataframe of or the filepath for the normal signal matrix file}
 
-\item{tdf_filepath}{The filepath for the tumor signal matrix file}
+\item{tsig_df}{The dataframe of or the filepath for the tumor signal matrix file}
 
 \item{n_latents}{A vector of latent factors to reconstruct the normal subspace}
 

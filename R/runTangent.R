@@ -10,9 +10,9 @@
 #' @description
 #' This function isolates isolates the tumor signal usng a set of normal signals by running the Tangent algorithm.
 #'
-#' @param sif_filepath The filepath for the sample information file
-#' @param ndf_filepath The filepath for the normal signal matrix file
-#' @param tdf_filepath The filepath for the tumor signal matrix file
+#' @param sif_df The dataframe of or the filepath for the sample information file
+#' @param nsig_df The dataframe of or the filepath for the normal signal matrix file
+#' @param tsig_df The dataframe of or the filepath for the tumor signal matrix file
 #' @param n_latent An integer representing the number of latent factors to reconstruct normal subspace
 #'
 #' @returns A normalized tumor signal matrix
@@ -24,14 +24,23 @@
 #' @importFrom stats median
 #' @export
 
-run_tangent <- function(sif_filepath, ndf_filepath, tdf_filepath, n_latent) {
-  sif <- readr::read_delim(sif_filepath, progress=FALSE, show_col_types=FALSE)
-  t.df <- readr::read_delim(tdf_filepath, progress=FALSE, show_col_types=FALSE) %>%
-    tibble::column_to_rownames('locus')
+run_tangent <- function(sif_df, nsig_df, tsig_df, n_latent) {
+
+  # Load data
+  if (inherits(sif_df, "character")) {
+    sif <- readr::read_delim(sif_df, progress=FALSE, show_col_types=FALSE)
+  } else { sif <- sif_df }
+  if (inherits(nsig_df, "character")) {
+    n.df <- readr::read_delim(nsig_df, progress=FALSE, show_col_types=FALSE) %>%
+      tibble::column_to_rownames('locus')
+  } else { n.df <- nsig_df }
+  if (inherits(tsig_df, "character")) {
+    t.df <- readr::read_delim(tsig_df, progress=FALSE, show_col_types=FALSE) %>%
+      tibble::column_to_rownames('locus')
+  } else { t.df <- tsig_df }
 
   # Other functions from this package
-  ndf_lt <- transform_normals(sif_filepath, ndf_filepath)
-  n.autox.svd <- run_svd(sif_filepath, ndf_filepath)
+  n.autox.svd <- run_svd(sif, n.df)
 
   ## Tangent on autosomes and chrX
   cat('\nRunning Tangent on autosomes and chrX ...\n')
@@ -41,12 +50,12 @@ run_tangent <- function(sif_filepath, ndf_filepath, tdf_filepath, n_latent) {
   if (num.lf == 0 | num.lf > length(n.autox.svd$d)) {
     stop('-l option need to be greater than 0, and less than or equal to the number of normal samples.')
   } else if (num.lf == 1) {
-    N.autox <- as.matrix(n.autox.svd$u[, num.lf]) %*% n.autox.svd$d[num.lf] %*% t(n.autox.svd$v[, num.lf])
+    N.autox <- as.matrix(n.autox.svd$u[, num.lf, drop = FALSE]) %*% n.autox.svd$d[num.lf] %*% t(n.autox.svd$v[, num.lf, drop = FALSE])
   } else {
-    N.autox <- n.autox.svd$u[, 1:num.lf] %*% diag(n.autox.svd$d[1:num.lf]) %*% t(n.autox.svd$v[, 1:num.lf])
+    N.autox <- n.autox.svd$u[, 1:num.lf, drop = FALSE] %*% diag(n.autox.svd$d[1:num.lf]) %*% t(n.autox.svd$v[, 1:num.lf, drop = FALSE])
   }
 
-  T.autox <- t.df[!grepl('^Y', rownames(t.df)),] %>%
+  T.autox <- t.df[!grepl('^Y', rownames(t.df)), , drop = FALSE] %>%
     as.matrix()
 
   ## Get the origin in the normal subspace
@@ -61,17 +70,13 @@ run_tangent <- function(sif_filepath, ndf_filepath, tdf_filepath, n_latent) {
   T.autox.norm <- T.autox0 - proj.autox
 
   ## Re-scaling after Tangent by median
-  T.autox.norm.medians <- T.autox.norm[!grepl('X', rownames(T.autox.norm)),] %>%
+  T.autox.norm.medians <- T.autox.norm[!grepl('X', rownames(T.autox.norm)), , drop = FALSE] %>%
     apply(., 2, median)
 
-  T.autox.norm.rescaled <- t(t(T.autox.norm)- T.autox.norm.medians)
+  T.autox.norm.rescaled <- t(t(T.autox.norm) - T.autox.norm.medians)
   cat('Done.\n')
 
-  ## Tangent on male chrY
-  cat('\nRunning Tangent on male chrY ...\n')
-  n.df <- readr::read_delim(ndf_filepath, progress=FALSE, show_col_types=FALSE) %>%
-    tibble::column_to_rownames('locus')
-
+  ## Check if there are any male tumors
   male.normals <- sif %>%
     dplyr::filter(sample.id %in% colnames(n.df) & gender=='male') %>%
     dplyr::pull(sample.id)
@@ -80,44 +85,62 @@ run_tangent <- function(sif_filepath, ndf_filepath, tdf_filepath, n_latent) {
     dplyr::filter(sample.id %in% colnames(t.df) & gender=='male') %>%
     dplyr::pull(sample.id)
 
-  N.m <- n.df[, male.normals] %>%
-    as.matrix()
+  if (length(male.tumors) > 0) {
+    ## Tangent on male chrY
+    cat('\nRunning Tangent on male chrY ...\n')
 
-  T.m <- t.df[, male.tumors] %>%
-    as.matrix()
+    N.m <- n.df[, male.normals, drop = FALSE] %>%
+      as.matrix()
 
-  ## Get the origin in the normal subspace
-  N.m.means <- apply(N.m, 1, mean)
-  N.m0 <- N.m - N.m.means
-  T.m0 <- T.m - N.m.means
+    T.m <- t.df[, male.tumors, drop = FALSE] %>%
+      as.matrix()
 
-  ## Run Tangent
-  Npi.m <- pracma::pinv(N.m0)
-  weights.m <- Npi.m %*% T.m0
-  proj.m <- N.m0 %*% weights.m
-  T.m.norm <- T.m0 - proj.m
+    ## Get the origin in the normal subspace
+    N.m.means <- apply(N.m, 1, mean)
+    N.m0 <- N.m - N.m.means
+    T.m0 <- T.m - N.m.means
 
-  ## Re-scaling after Tangent by median
-  T.m.norm.medians <- T.m.norm[!grepl('^X|^Y', rownames(T.m.norm)),] %>%
-    apply(., 2, median)
+    ## Run Tangent
+    Npi.m <- pracma::pinv(N.m0)
+    weights.m <- Npi.m %*% T.m0
+    proj.m <- N.m0 %*% weights.m
+    T.m.norm <- T.m0 - proj.m
 
-  T.m.norm.rescaled <- t(t(T.m.norm)- T.m.norm.medians)
-  T.m.y <- T.m.norm.rescaled[grepl('^Y', rownames(T.m.norm.rescaled)), ]
+    ## Re-scaling after Tangent by median
+    T.m.norm.medians <- T.m.norm[!grepl('^X|^Y', rownames(T.m.norm)), , drop = FALSE] %>%
+      apply(., 2, median)
 
-  ## Adjust chrY so that it is relative to CN=2
-  T.m.y.adj <- T.m.y - 1
-  cat('Done.\n')
+    T.m.norm.rescaled <- t(t(T.m.norm)- T.m.norm.medians)
+    T.m.y <- T.m.norm.rescaled[grepl('^Y', rownames(T.m.norm.rescaled)), , drop = FALSE]
 
-  ## Combine "autosomes & chrX" and "chrY"
-  ## Replace NAs in female chrY for downstream analysis (e.g. Circular Binary Segmentation)
-  T.norm <- as.data.frame(T.autox.norm.rescaled) %>%
-    dplyr::bind_rows(as.data.frame(T.m.y.adj))
+    ## Adjust chrY so that it is relative to CN=2
+    T.m.y.adj <- T.m.y - 1
+    cat('Done.\n')
 
-  rownames(T.norm) <- rownames(t.df)
+    ## Combine "autosomes & chrX" and "chrY"
+    ## Replace NAs in female chrY for downstream analysis (e.g. Circular Binary Segmentation)
+    T.norm <- as.data.frame(T.autox.norm.rescaled) %>%
+      dplyr::bind_rows(as.data.frame(T.m.y.adj))
 
-  T.norm <- T.norm %>%
-    as.data.frame() %>%
-    tibble::rownames_to_column('locus')
+    rownames(T.norm) <- rownames(t.df)
+
+    T.norm <- T.norm %>%
+      as.data.frame() %>%
+      tibble::rownames_to_column('locus')
+  } else {
+    # If only female tumors
+    # Fill Y-chromosome loci with NA
+    y.rows <- t.df[grepl("^Y", rownames(t.df)), , drop = FALSE]
+    y.NA <- as.data.frame(lapply(y.rows, function(x) rep(NA, length(x))))
+    rownames(y.NA) <- rownames(y.rows)
+
+    T.norm <- as.data.frame(T.autox.norm.rescaled) %>%
+      dplyr::bind_rows(as.data.frame(y.NA))
+
+    T.norm <- T.norm %>%
+      as.data.frame() %>%
+      tibble::rownames_to_column('locus')
+  }
 
   return(T.norm)
 }
