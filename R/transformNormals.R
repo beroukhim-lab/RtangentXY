@@ -10,8 +10,8 @@
 #' @description
 #' Conduct linear transformation on the CN signals of the male X chromosomes.
 #'
-#' @param sif_df The dataframe of or the filepath for the sample information file
-#' @param nsig_df The dataframe of or the filepath for the normal signal matrix file
+#' @param sif_df The tibble of or the filepath for the sample information file
+#' @param nsig_df The tibble of or the filepath for the normal signal matrix file
 #'
 #' @return A matrix with the male X chromosomes linearly transformed
 #'
@@ -30,10 +30,14 @@ transform_normals <- function(sif_df, nsig_df) {
   if (inherits(sif_df, "character")) {
     sif <- readr::read_delim(sif_df, progress=FALSE, show_col_types=FALSE)
   } else { sif <- sif_df }
+
   if (inherits(nsig_df, "character")) {
     n.df <- readr::read_delim(nsig_df, progress=FALSE, show_col_types=FALSE) %>%
       tibble::column_to_rownames('locus')
-  } else { n.df <- nsig_df }
+  } else {
+    if ('locus' %in% colnames(nsig_df)) { n.df <- nsig_df %>% tibble::column_to_rownames('locus') }
+    else { n.df <- nsig_df }
+  }
 
   ## Linear transformation only on male chrX in normal samples
   female.normal.samples <- sif %>%

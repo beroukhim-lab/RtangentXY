@@ -39,7 +39,12 @@ Imports:
     parallel (>= 3.6.2),
     ggbeeswarm (>= 0.5.3),
     ggh4x (>= 0.2.8),
-    DNAcopy (>= 1.72.0)
+    purrr (>= 1.0.2),
+    DNAcopy (>= 1.72.0),
+    GenomicRanges (>= 1.50.2)
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+Depends: 
+    R (>= 2.10)
+LazyData: true

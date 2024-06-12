@@ -14,7 +14,7 @@
 #' that aren't modified in this function and package. In this case, the `R/runCBS.R`
 #' file can be modified to include these arguments.
 #'
-#' @param tnorm_df The `runTangent()` output dataframe. It should be in the same format as the tumor signal matrix file
+#' @param tnorm_df The `runTangent()` output tibble. It should be in the same format as the tumor signal matrix file
 #' @param data_type This is the `data.type` argument for `DNAcopy::CNA()`. Default is logratio, but can be `'binary'` if LOH data
 #' @param alpha This is the `alpha` argument for `DNAcopy::segment()`. Default is 0.005
 #' @param min_width This is the `min.width` argument for `DNAcopy::segment()`. Default is 3
@@ -26,8 +26,9 @@
 
 run_cbs <- function(tnorm_df, data_type = 'logratio', alpha = 0.005, min_width = 3) {
   # First transform this matrix so that we can parallelize: loci as column names and sample names as row names
-  tnorm_data <- tnorm_df[,-1]
-  rownames(tnorm_data) <- tnorm_df[,1]
+  # Assumes locus is a column
+  tnorm_data <- tnorm_df[ , -1, drop = FALSE]
+  rownames(tnorm_data) <- tnorm_df[ , 1, drop = TRUE]
   tnorm_data <- t(tnorm_data)
 
   ret_list <- apply(tnorm_data, 1, row.cbs, data_type, alpha, min_width)

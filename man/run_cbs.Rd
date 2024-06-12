@@ -7,7 +7,7 @@
 run_cbs(tnorm_df, data_type = "logratio", alpha = 0.005, min_width = 3)
 }
 \arguments{
-\item{tnorm_df}{The \code{runTangent()} output dataframe. It should be in the same format as the tumor signal matrix file}
+\item{tnorm_df}{The \code{runTangent()} output tibble. It should be in the same format as the tumor signal matrix file}
 
 \item{data_type}{This is the \code{data.type} argument for \code{DNAcopy::CNA()}. Default is logratio, but can be \code{'binary'} if LOH data}
 

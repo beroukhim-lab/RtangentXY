@@ -18,11 +18,11 @@ run_pseudotangent(
 )
 }
 \arguments{
-\item{sif_df}{The dataframe of or the filepath for the sample information file}
+\item{sif_df}{The tibble of or the filepath for the sample information file}
 
-\item{nsig_df}{The dataframe of or the filepath for the normal signal matrix file}
+\item{nsig_df}{The tibble of or the filepath for the normal signal matrix file}
 
-\item{tsig_df}{The dataframe of or the filepath for the tumor signal matrix file}
+\item{tsig_df}{The tibble of or the filepath for the tumor signal matrix file}
 
 \item{n_latent_init}{The number of latent factors to reconstruct the initial normal subspace}
 
@@ -31,6 +31,11 @@ run_pseudotangent(
 \item{cbs_a}{The alpha parameter for the function \code{run_cbs()}}
 
 \item{cbs_mw}{The minimum width parameter for the function \code{run_cbs()}}
+
+\item{num_partitions}{The number of partitions to create in the pseudotangent pipeline. This
+must be less than the number of tumors}
+
+\item{partition_seed}{The seed to set for reproducibility for the random partitioning}
 
 \item{n_latent_part}{The number of latent factors for each of the partition runs}
 }

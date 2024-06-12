@@ -7,13 +7,13 @@
 plot_signal_noise(sif_df, pif_df, nsig_df, tsig_df, n_latents, cores = 2)
 }
 \arguments{
-\item{sif_df}{The dataframe of or the filepath for the sample information file}
+\item{sif_df}{The tibble of or the filepath for the sample information file}
 
-\item{pif_df}{The dataframe of or the filepath for the probe information file}
+\item{pif_df}{The tibble of or the filepath for the probe information file}
 
-\item{nsig_df}{The dataframe of or the filepath for the normal signal matrix file}
+\item{nsig_df}{The tibble of or the filepath for the normal signal matrix file}
 
-\item{tsig_df}{The dataframe of or the filepath for the tumor signal matrix file}
+\item{tsig_df}{The tibble of or the filepath for the tumor signal matrix file}
 
 \item{n_latents}{A vector of latent factors to reconstruct the normal subspace}
 

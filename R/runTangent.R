@@ -10,9 +10,9 @@
 #' @description
 #' This function isolates isolates the tumor signal usng a set of normal signals by running the Tangent algorithm.
 #'
-#' @param sif_df The dataframe of or the filepath for the sample information file
-#' @param nsig_df The dataframe of or the filepath for the normal signal matrix file
-#' @param tsig_df The dataframe of or the filepath for the tumor signal matrix file
+#' @param sif_df The tibble of or the filepath for the sample information file
+#' @param nsig_df The tibble of or the filepath for the normal signal matrix file
+#' @param tsig_df The tibble of or the filepath for the tumor signal matrix file
 #' @param n_latent An integer representing the number of latent factors to reconstruct normal subspace
 #'
 #' @returns A normalized tumor signal matrix
@@ -30,14 +30,22 @@ run_tangent <- function(sif_df, nsig_df, tsig_df, n_latent) {
   if (inherits(sif_df, "character")) {
     sif <- readr::read_delim(sif_df, progress=FALSE, show_col_types=FALSE)
   } else { sif <- sif_df }
+
   if (inherits(nsig_df, "character")) {
     n.df <- readr::read_delim(nsig_df, progress=FALSE, show_col_types=FALSE) %>%
       tibble::column_to_rownames('locus')
-  } else { n.df <- nsig_df }
+  } else {
+    if ('locus' %in% colnames(nsig_df)) { n.df <- nsig_df %>% tibble::column_to_rownames('locus') }
+    else { n.df <- nsig_df }
+  }
+
   if (inherits(tsig_df, "character")) {
     t.df <- readr::read_delim(tsig_df, progress=FALSE, show_col_types=FALSE) %>%
       tibble::column_to_rownames('locus')
-  } else { t.df <- tsig_df }
+  } else {
+    if ('locus' %in% colnames(tsig_df)) { t.df <- tsig_df %>% tibble::column_to_rownames('locus') }
+    else { t.df <- tsig_df }
+  }
 
   # Other functions from this package
   n.autox.svd <- run_svd(sif, n.df)

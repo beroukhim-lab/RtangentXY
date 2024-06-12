@@ -10,10 +10,10 @@
 #' @description
 #' For each of the given number of latent factors, this function runs `run_tangent()` and plots the signal and noise data for each latent factor.
 #'
-#' @param sif_df The dataframe of or the filepath for the sample information file
-#' @param pif_df The dataframe of or the filepath for the probe information file
-#' @param nsig_df The dataframe of or the filepath for the normal signal matrix file
-#' @param tsig_df The dataframe of or the filepath for the tumor signal matrix file
+#' @param sif_df The tibble of or the filepath for the sample information file
+#' @param pif_df The tibble of or the filepath for the probe information file
+#' @param nsig_df The tibble of or the filepath for the normal signal matrix file
+#' @param tsig_df The tibble of or the filepath for the tumor signal matrix file
 #' @param n_latents A vector of latent factors to reconstruct the normal subspace
 #' @param cores The number of parallel cores to use when calculating signal to noise. Default is set to 2 cores
 #'
@@ -38,17 +38,26 @@ plot_signal_noise <- function(sif_df, pif_df, nsig_df, tsig_df, n_latents, cores
   if (inherits(sif_df, "character")) {
     sif <- readr::read_delim(sif_df, progress=FALSE, show_col_types=FALSE)
   } else { sif <- sif_df }
+
   if (inherits(pif_df, "character")) {
     pif <- readr::read_delim(pif_df, progress=FALSE, show_col_types=FALSE)
   } else { pif <- pif_df }
+
   if (inherits(nsig_df, "character")) {
     n.df <- readr::read_delim(nsig_df, progress=FALSE, show_col_types=FALSE) %>%
       tibble::column_to_rownames('locus')
-  } else { n.df <- nsig_df }
+  } else {
+    if ('locus' %in% colnames(nsig_df)) { n.df <- nsig_df %>% tibble::column_to_rownames('locus') }
+    else { n.df <- nsig_df }
+  }
+
   if (inherits(tsig_df, "character")) {
     t.df <- readr::read_delim(tsig_df, progress=FALSE, show_col_types=FALSE) %>%
       tibble::column_to_rownames('locus')
-  } else { t.df <- tsig_df }
+  } else {
+    if ('locus' %in% colnames(tsig_df)) { t.df <- tsig_df %>% tibble::column_to_rownames('locus') }
+    else { t.df <- tsig_df }
+  }
 
   num.lf <- sort(n_latents)
 
