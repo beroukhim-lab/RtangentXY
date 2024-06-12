@@ -17,3 +17,6 @@ utils::globalVariables(c("signal", "d", "chr", "arm.median", "lf", "metric", "va
 
 # We need to add a global variable for ".", as this is used in dplyr
 utils::globalVariables(c("."))
+
+# We need to add a global variable for "chr" and "chrom", as this is used in the CBS code and blacklist file
+utils::globalVariables(c("chr", "chrom"))

@@ -11,8 +11,8 @@
 #' Plots the signal distribution of Chromosome X after the linear transformation
 #' done by `transform_normals()`
 #'
-#' @param sif_df The dataframe of or the filepath for the sample information file used to create `ndf_transformed`
-#' @param nsig_df The dataframe of or the filepath for the normal signal matrix file used to create `ndf_transformed`
+#' @param sif_df The tibble of or the filepath for the sample information file used to create `ndf_transformed`
+#' @param nsig_df The tibble of or the filepath for the normal signal matrix file used to create `ndf_transformed`
 #' @param ndf_transformed The returned transformed dataframe from `transform_normals()`
 #'
 #' @returns A dataframe of the plotted data
@@ -32,10 +32,15 @@ plot_normal_transformation <- function(sif_df, nsig_df, ndf_transformed) {
   if (inherits(sif_df, "character")) {
     sif <- readr::read_delim(sif_df, progress=FALSE, show_col_types=FALSE)
   } else { sif <- sif_df }
+
   if (inherits(nsig_df, "character")) {
     n.df <- readr::read_delim(nsig_df, progress=FALSE, show_col_types=FALSE) %>%
       tibble::column_to_rownames('locus')
-  } else { n.df <- nsig_df }
+  } else {
+    if ('locus' %in% colnames(nsig_df)) { n.df <- nsig_df %>% tibble::column_to_rownames('locus') }
+    else { n.df <- nsig_df }
+  }
+
   n.df.transformed <- ndf_transformed
 
   signal.x.before <- n.df[grepl('^X', rownames(n.df)),] %>%

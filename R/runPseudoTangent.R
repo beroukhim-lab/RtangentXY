@@ -1,6 +1,6 @@
 ### Author: Siyun Lee siyun@broadinstitute.org, Kei Enomoto kenomoto@broadinstitute.org, Greg Raskind graskind@g.harvard.edu
 ### Contact: Rameen Beroukhim, rameen_beroukhim@dfci.harvard.edu
-### Date last updated: April 8, 2024
+### Date last updated: June 11, 2024
 ### License: GNU GPL >= 2, Copyright (C) 2024 Dana-Farber Cancer Institute
 ### Dependencies: Check DESCRIPTION file
 ### See https://github.com/beroukhim-lab/RtangentXY for more information
@@ -12,12 +12,15 @@
 #' but it should be used when the set of normals are particularly non-representative.
 #' NOTE: all signal file rows should be in order (ie. from 1-22, X, Y).
 #'
-#' @param sif_df The dataframe of or the filepath for the sample information file
-#' @param nsig_df The dataframe of or the filepath for the normal signal matrix file
-#' @param tsig_df The dataframe of or the filepath for the tumor signal matrix file
+#' @param sif_df The tibble of or the filepath for the sample information file
+#' @param nsig_df The tibble of or the filepath for the normal signal matrix file
+#' @param tsig_df The tibble of or the filepath for the tumor signal matrix file
 #' @param cbs_dt The data type parameter for the function `run_cbs()`
 #' @param cbs_a The alpha parameter for the function `run_cbs()`
 #' @param cbs_mw The minimum width parameter for the function `run_cbs()`
+#' @param num_partitions The number of partitions to create in the pseudotangent pipeline. This
+#' must be less than the number of tumors
+#' @param partition_seed The seed to set for reproducibility for the random partitioning
 #' @param n_latent_init The number of latent factors to reconstruct the initial normal subspace
 #' @param n_latent_part The number of latent factors for each of the partition runs
 #'
@@ -43,14 +46,22 @@ run_pseudotangent <- function(sif_df, nsig_df, tsig_df, n_latent_init,
   if (inherits(sif_df, "character")) {
     sif <- readr::read_delim(sif_df, progress=FALSE, show_col_types=FALSE)
   } else { sif <- sif_df }
+
   if (inherits(nsig_df, "character")) {
     n.df <- readr::read_delim(nsig_df, progress=FALSE, show_col_types=FALSE) %>%
       tibble::column_to_rownames('locus')
-  } else { n.df <- nsig_df }
+  } else {
+    if ('locus' %in% colnames(nsig_df)) { n.df <- nsig_df %>% tibble::column_to_rownames('locus') }
+    else { n.df <- nsig_df }
+  }
+
   if (inherits(tsig_df, "character")) {
     t.df <- readr::read_delim(tsig_df, progress=FALSE, show_col_types=FALSE) %>%
       tibble::column_to_rownames('locus')
-  } else { t.df <- tsig_df }
+  } else {
+    if ('locus' %in% colnames(tsig_df)) { t.df <- tsig_df %>% tibble::column_to_rownames('locus') }
+    else { t.df <- tsig_df }
+  }
 
   # Check to make sure the input number of partitions is not more than the number of tumors
   if (num_partitions > length(colnames(t.df))) {
@@ -100,7 +111,7 @@ run_pseudotangent <- function(sif_df, nsig_df, tsig_df, n_latent_init,
 
   # Step 5: Combine all of the partitions
   cat('\nCombining all partitions...\n')
-  step5_combined_output <- format.partitions(step4_tangent_partitions, t.df)
+  step5_combined_output <- partitions.format.join(step4_tangent_partitions, t.df)
   step5_combined_output <- data.frame(locus = row.names(t.df), step5_combined_output)
 
   # Step 6: Run CBS on combined output
@@ -185,8 +196,7 @@ add.pseudonormal.sif <- function(tumor_sif, pseudonormal_df, sif) {
   return(final_sif)
 }
 
-#' @exportS3Method
-merge.df <- function(df1, df2) {
+locus.join <- function(df1, df2) {
   # Inner join on "locus" column
   merged <- dplyr::inner_join(df1, df2, by = "locus")
   # Reorder columns to keep "locus" first
@@ -194,10 +204,9 @@ merge.df <- function(df1, df2) {
   return(merged)
 }
 
-#' @exportS3Method
-format.partitions <- function(listy, t.df) {
+partitions.format.join <- function(listy, t.df) {
   # Combine all of the inidividual tangent outputs and format it like t.df
-  combined_df <- purrr::reduce(listy, merge.df)
+  combined_df <- purrr::reduce(listy, locus.join)
   combined_df <- combined_df[, colnames(t.df), drop = FALSE]
   cat('\nChecking if the columns of the pseudotangent output match the input tumor signal columns...\n')
   cat(paste0(toString(all(colnames(combined_df) == colnames(t.df)))), '\n')

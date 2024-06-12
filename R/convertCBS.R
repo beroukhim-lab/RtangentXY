@@ -14,8 +14,8 @@
 #' computation between the CBS outputs and signal files simple.
 #'
 #' @param cbs_out The output from `runCBS()` (i.e. list of outputs from `DNAcopy::segment()`)
-#' @param sif_df The dataframe of or the filepath for the sample information file
-#' @param tsig_df The dataframe of or the filepath for the tumor signal matrix file
+#' @param sif_df The tibble of or the filepath for the sample information file
+#' @param tsig_df The tibble of or the filepath for the tumor signal matrix file
 #'
 #' @returns A normalized tumor signal matrix
 #'
@@ -37,7 +37,10 @@ convert_cbs <- function(cbs_out, sif_df, tsig_df) {
   if (inherits(tsig_df, "character")) {
     tumor_signal_data <- readr::read_delim(tsig_df, progress=FALSE, show_col_types=FALSE) %>%
       tibble::column_to_rownames('locus')
-  } else { tumor_signal_data <- tsig_df }
+  } else {
+    if ('locus' %in% colnames(tsig_df)) { tumor_signal_data <- tsig_df %>% tibble::column_to_rownames('locus') }
+    else { tumor_signal_data <- tsig_df }
+  }
 
   cbs_df_list <- list()
 

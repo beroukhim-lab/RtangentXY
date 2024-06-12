@@ -1,6 +1,6 @@
 test_that("plot_signal_noise() properly returns signal noise matrix on filepaths", {
   sif_path <- testthat::test_path("dummydata", "raw_inputs", "sample_information.txt")
-  pif_path <- testthat::test_path("dummydata", "raw_inputs", "probe_annotation.txt")
+  pif_path <- testthat::test_path("dummydata", "raw_inputs", "probe_information.txt")
   normal_path <- testthat::test_path("dummydata", "raw_inputs", "normal_log2RCN.txt")
   tumor_path <- testthat::test_path("dummydata", "raw_inputs", "tumor_log2RCN.txt")
 
@@ -12,7 +12,7 @@ test_that("plot_signal_noise() properly returns signal noise matrix on filepaths
 
 test_that("plot_signal_noise() properly returns signal noise matrix on R objects", {
   sif <- readRDS(testthat::test_path("dummydata", "raw_inputs", "sample_information.rds"))
-  pif <- readRDS(testthat::test_path("dummydata", "raw_inputs", "probe_annotation.rds"))
+  pif <- readRDS(testthat::test_path("dummydata", "raw_inputs", "probe_information.rds"))
   n.df <- readRDS(testthat::test_path("dummydata", "raw_inputs", "normal_log2RCN.rds"))
   t.df <- readRDS(testthat::test_path("dummydata", "raw_inputs", "tumor_log2RCN.rds"))
 
