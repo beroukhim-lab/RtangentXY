@@ -29,9 +29,15 @@ Once this package is installed, load the package by calling:
 
 `library(RtangentXY)`
 
-`run_tangent()`
+We suggest the following workflows:
 
-`run_pseudptangent()`
+If you have a subset of normal samples, we suggest running Tangent.
+`filter_blacklist()` `run_tangent()` `run_cbs()` `convert_cbs()`
+
+If the set of normals is particularly non-representative, we suggest running PseudoTangent.
+`filter_blacklist()` `run_pseudptangent()`
+
+Because CBS is an essential intermediate step within PseudoTangent, all segmentation is done within the `run_pseudotangent()` function.
 
 ## Support
 
