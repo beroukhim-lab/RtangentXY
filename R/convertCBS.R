@@ -24,7 +24,6 @@
 #' @import tibble
 #' @export
 
-# The following code is called by run_pseudotangent() to convert the run_cbs() output tdf_file format
 convert_cbs <- function(cbs_out, sif_df, tsig_df) {
 
   # Note: when the CBS was conducted, we only took into account the start (location)
