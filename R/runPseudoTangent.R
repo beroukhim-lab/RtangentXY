@@ -117,10 +117,9 @@ run_pseudotangent <- function(sif_df, nsig_df, tsig_df, n_latent_init,
   # Step 6: Run CBS on combined output
   cat('\nRunning CBS on final output...\n')
   step6_final_cbs_output <- run_cbs(step5_combined_output, data_type = cbs_dt, alpha = cbs_a, min_width = cbs_mw)
-  step6_final_output_converted <- convert_cbs(step6_final_cbs_output, sif, t.df)
   cat('Done.\n')
 
-  return(step6_final_output_converted)
+  return(step6_final_cbs_output)
 }
 
 partition.dataframe <- function(df, num_partitions, seed) {
