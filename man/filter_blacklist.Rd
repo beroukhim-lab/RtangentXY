@@ -12,7 +12,7 @@ column of the following form: \code{"{chr}:{start}-{end}"} where \code{{chr}} is
 and where \code{{start}} and \code{{end}} are all integers}
 
 \item{version}{By default \code{hg38}. If the data in \code{df} is aligned to \code{hg19}, set this parameter to
-\code{"hg19"}. A dataframe can also be supplied as a parameter for custom filtering. Must contain a \code{chr}
+\code{"hg19"}. A dataframe or filepath can also be supplied as a parameter for custom filtering. Must contain a \code{chr}
 column and columns with start and end CNV loci}
 
 \item{col_range}{By default \code{NULL}, as the flanking regions of the blacklist files are selected.
