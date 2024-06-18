@@ -76,7 +76,7 @@ run_pseudotangent(...)
 
 Because CBS is an essential intermediate step within PseudoTangent, all segmentation is done within the `run_pseudotangent()` function.
 
-Both of these workflows will output a DNAcopy object, which can be plotted.
+Both of these workflows will output a list of `DNAcopy` objects, each of which represents the segmentation data from an input tumor sample.
 
 ## Support
 
