@@ -4,10 +4,14 @@ An easy-to-use package containing functions that run TangentXY and Pseudotangent
 
 ## Table of Contents
 
+-   [How to cite us](#)
 -   [Installation](#installation)
 -   [Usage](#usage)
 -   [Support](#support)
 -   [Versions](#versions)
+
+
+## How to cite us
 
 ## Installation
 
