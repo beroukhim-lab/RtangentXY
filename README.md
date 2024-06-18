@@ -4,14 +4,18 @@ An easy-to-use package containing functions that run TangentXY and Pseudotangent
 
 ## Table of Contents
 
--   [How to cite us](#)
+-   [Cite](#cite)
 -   [Installation](#installation)
 -   [Usage](#usage)
 -   [Support](#support)
 -   [Versions](#versions)
 
 
-## How to cite us
+## Cite
+
+These are the research papers associated with `RtangentXY`:
+
+* Gao GF, Oh C, Saksena G, Deng D, Westlake LC, Hill BA, Reich M, Schumacher SE, Berger AC, Carter SL, Cherniack AD, Meyerson M, Tabak B, Beroukhim R, Getz G. Tangent normalization for somatic copy-number inference in cancer genome analysis. Bioinformatics. 2022 Oct 14;38(20):4677-4686. doi: 10.1093/bioinformatics/btac586. PMID: 36040167; PMCID: PMC9563697.
 
 ## Installation
 
