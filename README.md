@@ -24,8 +24,15 @@ Check the DESCRIPTION file for the list of all imports. This is an R package, so
 We will present one way to install this package. First download this repository into your workspace:
 
 ```sh
-git clone 
-cd 
+git clone git@github.com:beroukhim-lab/RtangentXY.git
+cd RtangentXY
+```
+
+You can then install `RtangentXY` by running the following commands in an R environment:
+
+```r
+install.packages("devtools")
+devtools::install()
 ```
 
 ## Expected Inputs
