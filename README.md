@@ -35,7 +35,7 @@ install.packages("devtools")
 devtools::install()
 ```
 
-You can then test if the package and dependencies were properly installed by running the following command in an R environment, within the `/RtangentXY` directory:
+You can then test if the package and dependencies were properly installed by running the following command in an R environment, within the same `/RtangentXY` directory:
 
 ```r
 devtools::test()
