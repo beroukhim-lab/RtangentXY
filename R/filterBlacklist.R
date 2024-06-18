@@ -16,7 +16,7 @@
 #' column of the following form: `"{chr}:{start}-{end}"` where `{chr}` is 1-22 or X,
 #' and where `{start}` and `{end}` are all integers
 #' @param version By default `hg38`. If the data in `df` is aligned to `hg19`, set this parameter to
-#' `"hg19"`. A dataframe can also be supplied as a parameter for custom filtering. Must contain a `chr`
+#' `"hg19"`. A dataframe or filepath can also be supplied as a parameter for custom filtering. Must contain a `chr`
 #' column and columns with start and end CNV loci
 #' @param col_range By default `NULL`, as the flanking regions of the blacklist files are selected.
 #' If a custom version dataframe is supplied (or if the flanking regions are not desired), a numeric
@@ -42,6 +42,7 @@ filter_blacklist <- function(df, version = "hg38", col_range = NULL, cores = 2) 
   if (version == "hg38") { blacklist_df <- RtangentXY::hg38_blacklist }
   else if (version == "hg19") { blacklist_df <- RtangentXY::hg19_blacklist }
   else if (is.data.frame(version)) { blacklist_df <- version }
+  else if (inherits(version, "character")) { blacklist_df <- readr::read_delim(version, progress=FALSE, show_col_types=FALSE) }
   else { stop("ERROR: version parameter not recognized") }
 
   # Make sure dataframe as a locus column
