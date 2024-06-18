@@ -55,17 +55,24 @@ Normal Signal File
 
 Once this package is installed, load the package by calling:
 
-`library(RtangentXY)`
-
-We suggest the following workflows:
+```r
+library(RtangentXY)
+```
 
 If you have a subset of normal samples, we suggest running Tangent.
 
-`filter_blacklist()` `run_tangent()` `run_cbs()` 
+```r
+filter_blacklist(...) %>%
+run_tangent(...) %>%
+run_cbs(...)
+```
 
 If the set of normals is particularly non-representative, we suggest running PseudoTangent.
 
-`filter_blacklist()` `run_pseudptangent()`
+```r
+filter_blacklist(...) %>%
+run_pseudotangent(...)
+```
 
 Because CBS is an essential intermediate step within PseudoTangent, all segmentation is done within the `run_pseudotangent()` function.
 
