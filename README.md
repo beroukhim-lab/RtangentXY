@@ -19,7 +19,14 @@ These are the research papers associated with `RtangentXY`:
 
 ## Installation
 
-Check the DESCRIPTION file for the list of all imports. Installing the latest version of `tidyverse` should take care of many of these package imports. Check [this link](https://cran.r-project.org/web/packages/githubinstall/vignettes/githubinstall.html) for instructions on installing an R package from GitHub.
+Check the DESCRIPTION file for the list of all imports. This is an R package, so it should be able to run on any device with R installed. We recommend using the latest version of R, as some of the dependencies may require more recent versions of R. Check [this link](https://cran.r-project.org/web/packages/githubinstall/vignettes/githubinstall.html) for instructions on installing an R package from GitHub.
+
+We will present one way to install this package. First download this repository into your workspace:
+
+```sh
+git clone 
+cd 
+```
 
 ## Expected Inputs
 
