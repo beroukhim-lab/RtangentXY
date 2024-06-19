@@ -1,6 +1,6 @@
 # TangentXY R Package
 
-An easy-to-use package containing functions that run TangentXY and PseudotangentXY, sex-informed extensions of the existing Tangent and Pseudotangent inference pipelines.
+An easy-to-use package containing functions that run TangentXY and PseudotangentXY, sex-informed extensions of the existing Tangent and PseudoTangent inference pipelines.
 
 ## Table of Contents
 
