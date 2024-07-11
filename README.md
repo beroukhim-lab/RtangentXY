@@ -51,6 +51,8 @@ Tumor Signal File
 
 Normal Signal File
 
+Check  `/tests/testthat/dummydata/raw_inputs/` for how the data should be formatted. Errors may occur due to formatting, so ensuring that the column and row information matches the given format is essential.
+
 ## Usage
 
 Once this package is installed, load the package by calling:
