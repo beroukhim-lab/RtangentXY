@@ -25,7 +25,6 @@
 #' @export
 
 run_tangent <- function(sif_df, nsig_df, tsig_df, n_latent) {
-
   # Load data
   if (inherits(sif_df, "character")) {
     sif <- readr::read_delim(sif_df, progress=FALSE, show_col_types=FALSE)

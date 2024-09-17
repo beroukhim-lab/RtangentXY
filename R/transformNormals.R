@@ -39,32 +39,38 @@ transform_normals <- function(sif_df, nsig_df) {
     else { n.df <- nsig_df }
   }
 
+  # Consider the case where there are only female samples
+  # Does it also work when there are only male samples?
   ## Linear transformation only on male chrX in normal samples
   female.normal.samples <- sif %>%
     dplyr::filter(gender=='female' & type=='normal') %>%
     dplyr::pull(sample.id)
+
   male.normal.samples <- sif %>%
     dplyr::filter(gender=='male' & type=='normal') %>%
     dplyr::pull(sample.id)
 
-  female.x.mean <- n.df[grepl('^X', rownames(n.df)),] %>%
+  female.x.mean <- n.df[grepl('^X', rownames(n.df)), , drop = FALSE] %>%
     dplyr::select(all_of(female.normal.samples)) %>%
     as.matrix() %>%
     mean()
-  male.x.mean <- n.df[grepl('^X', rownames(n.df)),] %>%
+
+  male.x.mean <- n.df[grepl('^X', rownames(n.df)), , drop = FALSE] %>%
     dplyr::select(all_of(male.normal.samples)) %>%
     as.matrix() %>%
     mean()
-  female.x.sd <- n.df[grepl('^X', rownames(n.df)),] %>%
+
+  female.x.sd <- n.df[grepl('^X', rownames(n.df)), , drop = FALSE] %>%
     dplyr::select(all_of(female.normal.samples)) %>%
     as.matrix() %>%
     sd()
-  male.x.sd <- n.df[grepl('X', rownames(n.df)),] %>%
+
+  male.x.sd <- n.df[grepl('X', rownames(n.df)), , drop = FALSE] %>%
     dplyr::select(all_of(male.normal.samples)) %>%
     as.matrix() %>%
     sd()
 
-  n.df.x.transformed <- n.df[grepl('^X|^Y', rownames(n.df)), ] %>%
+  n.df.x.transformed <- n.df[grepl('^X|^Y', rownames(n.df)), , drop = FALSE] %>%
     tibble::rownames_to_column('locus') %>%
     tidyr::separate(col=locus, into=c('chr', 'pos'), sep=':') %>%
     tidyr::pivot_longer(names_to='sample.id', values_to='signal', cols=-c('chr', 'pos')) %>%
@@ -74,7 +80,7 @@ transform_normals <- function(sif_df, nsig_df) {
     tidyr::unite(col=locus, c('chr', 'pos'), sep=':') %>%
     tibble::column_to_rownames('locus')
 
-  n.df.transformed <- n.df[!grepl('^X|^Y', rownames(n.df)), ] %>%
+  n.df.transformed <- n.df[!grepl('^X|^Y', rownames(n.df)), , drop = FALSE] %>%
     dplyr::bind_rows(n.df.x.transformed) %>%
     tibble::rownames_to_column('locus')
 
