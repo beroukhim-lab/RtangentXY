@@ -66,14 +66,16 @@ If you have a subset of normal samples, we suggest running Tangent.
 ```r
 filter_blacklist(...) %>%
 run_tangent(...) %>%
-run_cbs(...)
+run_cbs(...) %>%
+save_segmentation(...)
 ```
 
 If the set of normals is particularly non-representative, we suggest running PseudoTangent.
 
 ```r
 filter_blacklist(...) %>%
-run_pseudotangent(...)
+run_pseudotangent(...) %>%
+save_segmentation(...)
 ```
 
 Because CBS is an essential intermediate step within PseudoTangent, all segmentation is done within the `run_pseudotangent()` function.
