@@ -51,7 +51,7 @@ Tumor Signal File
 
 Normal Signal File
 
-Check  `/tests/testthat/dummydata/raw_inputs/` for how the data should be formatted. Errors may occur due to formatting, so ensuring that the column and row information matches the given format is essential.
+Check  `/tests/testthat/dummydata/raw_inputs/` for how the data should be formatted. Errors may occur due to formatting, so ensuring that the column and row information matches the given format is essential. 
 
 ## Usage
 
@@ -80,7 +80,7 @@ save_segmentation(...)
 
 Because CBS is an essential intermediate step within PseudoTangent, all segmentation is done within the `run_pseudotangent()` function.
 
-Both of these workflows will output [segemented copy number](https://igv.org/web/snapshot/examples/copyNumber.html) text files. If instead you want a list of `DNAcopy` objects, each of which represents the segmentation data from an input tumor sample, you may choose not to run `save_segmentation(...)`.
+Both of these workflows will output [segemented copy number](https://igv.org/web/snapshot/examples/copyNumber.html) text files. If instead you want a list of `DNAcopy` objects, each element of which represents the segmentation data from an input tumor sample (and can be plotted using `DNAcopy` package functions), you may choose not to run `save_segmentation(...)`.
 
 ## Support
 
