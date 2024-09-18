@@ -22,7 +22,7 @@
 #' must be less than the number of tumors
 #' @param partition_seed The seed to set for reproducibility for the random partitioning
 #' @param n_latent_init The number of latent factors to reconstruct the initial normal subspace
-#' @param n_latent_part The number of latent factors for each of the partition runs
+#' @param n_latent_part The number of latent factors for each of the partition runs. This should not exceed the minimum number of normal/pseudonormal samples across all partitions.
 #'
 #' @returns A normalized tumor signal matrix
 #'
