@@ -75,10 +75,9 @@ If the set of normals is particularly non-representative, we suggest running Pse
 ```r
 filter_blacklist(...) %>%
 run_pseudotangent(...) %>%
+run_cbs(...) %>%
 save_segmentation(...)
 ```
-
-Because CBS is an essential intermediate step within PseudoTangent, all segmentation is done within the `run_pseudotangent()` function.
 
 Both of these workflows will output [segemented copy number](https://igv.org/web/snapshot/examples/copyNumber.html) text files. If instead you want a list of `DNAcopy` objects, each element of which represents the segmentation data from an input tumor sample (and can be plotted using `DNAcopy` package functions), you may choose not to run `save_segmentation(...)`.
 
