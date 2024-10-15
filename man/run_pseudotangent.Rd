@@ -37,7 +37,7 @@ must be less than the number of tumors}
 
 \item{partition_seed}{The seed to set for reproducibility for the random partitioning}
 
-\item{n_latent_part}{The number of latent factors for each of the partition runs}
+\item{n_latent_part}{The number of latent factors for each of the partition runs. This should not exceed the minimum number of normal/pseudonormal samples across all partitions.}
 }
 \value{
 A normalized tumor signal matrix
