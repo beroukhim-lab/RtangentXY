@@ -11,8 +11,7 @@
 #' Conduct singular value decomposition (SVD) on the normal signals in
 #' preparation for input into the Tangent algorithm
 #'
-#' @param sif_df The tibble of or the filepath for the sample information file
-#' @param nsig_df The tibble of or the filepath for the normal signal matrix file
+#' @param nt.df Normal samples transformed signal matrix file
 #'
 #' @returns A matrix with the male X chromosomes linearly transformed
 #'
@@ -21,27 +20,14 @@
 #' @import tibble
 #' @export
 
-run_svd <- function(sif_df, nsig_df) {
+run_svd <- function(nt.df) {
 
   cat('\nRunning SVD ...\n')
 
-  # Load data
-  if (inherits(sif_df, "character")) {
-    sif <- readr::read_delim(sif_df, progress=FALSE, show_col_types=FALSE)
-  } else { sif <- sif_df }
-
-  if (inherits(nsig_df, "character")) {
-    n.df <- readr::read_delim(nsig_df, progress=FALSE, show_col_types=FALSE) %>%
-      tibble::column_to_rownames('locus')
-  } else {
-    if ('locus' %in% colnames(nsig_df)) { n.df <- nsig_df %>% tibble::column_to_rownames('locus') }
-    else { n.df <- nsig_df }
-  }
-
-  n.lt.df <- transform_normals(sif, n.df) %>%
+  n.lt.df <- nt.df %>%
     tibble::column_to_rownames('locus')
 
-  n.autox <- n.lt.df[!grepl('^Y', rownames(n.lt.df)),] %>%
+  n.autox <- n.lt.df[!grepl('^Y', rownames(n.lt.df)), , drop = FALSE] %>%
     as.matrix()
 
   n.autox.svd <- svd(n.autox)

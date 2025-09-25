@@ -46,8 +46,16 @@ run_tangent <- function(sif_df, nsig_df, tsig_df, n_latent) {
     else { t.df <- tsig_df }
   }
 
-  # Other functions from this package
-  n.autox.svd <- run_svd(sif, n.df)
+  # Apply linear transformation
+  linear.transformation <- linear_transformation(sif, n.df, t.df)
+  n.df <- linear.transformation$n.df
+  t.df <- linear.transformation$t.df %>%
+    tibble::column_to_rownames("locus")
+  
+  # Run SVD
+  n.autox.svd <- run_svd(n.df)
+  n.df <- n.df %>%
+    tibble::column_to_rownames("locus")
 
   ## Tangent on autosomes and chrX
   cat('\nRunning Tangent on autosomes and chrX ...\n')
@@ -81,25 +89,31 @@ run_tangent <- function(sif_df, nsig_df, tsig_df, n_latent) {
     apply(., 2, median)
 
   T.autox.norm.rescaled <- t(t(T.autox.norm) - T.autox.norm.medians)
+
+  ## Adjust male chrX so that it is relative to CN=2
+  male.tumor.samples <- sif %>%
+    filter(gender=='male' & type=='tumor') %>%
+    pull(sample.id)
+
+  if (length(male.tumor.samples) > 0) {
+    T.autox.norm.rescaled[grepl('X', rownames(T.autox.norm.rescaled)), male.tumor.samples] <- T.autox.norm.rescaled[grepl('X', rownames(T.autox.norm.rescaled)), male.tumor.samples] - 1
+  }
+
   cat('Done.\n')
 
-  ## Check if there are any male tumors
-  male.normals <- sif %>%
+  male.normal.samples <- sif %>%
     dplyr::filter(sample.id %in% colnames(n.df) & gender=='male') %>%
     dplyr::pull(sample.id)
 
-  male.tumors <- sif %>%
-    dplyr::filter(sample.id %in% colnames(t.df) & gender=='male') %>%
-    dplyr::pull(sample.id)
-
-  if (length(male.tumors) > 0) {
+  ## Check if there are any male tumors
+  if (length(male.tumor.samples) > 0) {
     ## Tangent on male chrY
     cat('\nRunning Tangent on male chrY ...\n')
 
-    N.m <- n.df[, male.normals, drop = FALSE] %>%
+    N.m <- n.df[, male.normal.samples, drop = FALSE] %>%
       as.matrix()
 
-    T.m <- t.df[, male.tumors, drop = FALSE] %>%
+    T.m <- t.df[, male.tumor.samples, drop = FALSE] %>%
       as.matrix()
 
     ## Get the origin in the normal subspace
