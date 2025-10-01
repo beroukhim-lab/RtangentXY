@@ -20,8 +20,8 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Siyun Lee \email{siyun@broadinstitute.org} (\href{https://orcid.org/0009-0005-5130-5212}{ORCID})
   \item Kei Enomoto \email{Kei_Enomoto@dfci.harvard.edu}
+  \item Siyun Lee \email{siyun@broadinstitute.org} (\href{https://orcid.org/0009-0005-5130-5212}{ORCID})
 }
 
 Other contributors:

@@ -2,7 +2,11 @@ Package: RtangentXY
 Title: TangentXY SCNA Signal Normalization
 Version: 1.0.0
 Authors@R: 
-    c(person(given = "Greg",
+    c(person(given = "Kei",
+             family = "Enomoto",
+             email = "Kei_Enomoto@dfci.harvard.edu", 
+             role = "aut"),
+      person(given = "Greg",
              family = "Raskind",
              email = "graskind@umich.edu", 
              role = c("aut", "cre"),
@@ -12,10 +16,6 @@ Authors@R:
              email = "siyun@broadinstitute.org", 
              role = c("aut"),
              comment = c(ORCID = "0009-0005-5130-5212")),
-      person(given = "Kei",
-             family = "Enomoto",
-             email = "Kei_Enomoto@dfci.harvard.edu", 
-             role = "aut"),
       person(given = "Rameen",
              family = "Beroukhim",
              email = "Rameen_Beroukhim@dfci.harvard.edu", 
