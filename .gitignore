@@ -4,4 +4,3 @@
 .Ruserdata
 .DS_Store
 tests/testthat/debug.R
-docs
