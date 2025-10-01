@@ -5,9 +5,7 @@
 \alias{hg19_blacklist}
 \title{Germline Copy Number Variants Blacklist Data Version hg19}
 \format{
-\subsection{\code{hg19_blacklist}}{
-
-A data frame with 7,285 rows and 6 columns:
+A data frame with 7,454 rows and 6 columns:
 \describe{
 \item{id}{Unique ID for CNV}
 \item{chr}{Chromosome of CNV}
@@ -15,7 +13,6 @@ A data frame with 7,285 rows and 6 columns:
 \item{end}{CNV end location}
 \item{flanking.start}{Start location of region flanking CNV}
 \item{flanking.end}{End location of region flanking CNV}
-}
 }
 }
 \source{

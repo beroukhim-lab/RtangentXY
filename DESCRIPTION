@@ -1,16 +1,17 @@
 Package: RtangentXY
-Title: TangentXY SCNA Signal Normalization by the Beroukhim Lab
-Version: 0.0.1
+Title: TangentXY SCNA Signal Normalization
+Version: 1.0.0
 Authors@R: 
-    c(person(given = "Siyun",
+    c(person(given = "Greg",
+             family = "Raskind",
+             email = "graskind@umich.edu", 
+             role = c("aut", "cre"),
+             comment = c(ORCID = "0000-0002-9940-1984")),
+      person(given = "Siyun",
              family = "Lee",
              email = "siyun@broadinstitute.org", 
-             role = c("aut", "cre"),
+             role = c("aut"),
              comment = c(ORCID = "0009-0005-5130-5212")),
-      person(given = "Greg",
-             family = "Raskind",
-             email = "graskind@g.harvard.edu", 
-             role = "aut"),
       person(given = "Kei",
              family = "Enomoto",
              email = "Kei_Enomoto@dfci.harvard.edu", 
@@ -19,30 +20,37 @@ Authors@R:
              family = "Beroukhim",
              email = "Rameen_Beroukhim@dfci.harvard.edu", 
              role = c("cph", "fnd")))
-Description: This is the package implementation of TangentXY, a sex-informed copy number inference alogirhtm, which extends Tangent, as published in 2022 (PMID: 36040167).
+Description: This is the package implementation of TangentXY, a sex-informed copy number inference algorithm which extends Tangent, as published in 2022 (PMID: 36040167).
 License: GPL (>= 2)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Imports: 
-    readr (>= 2.1.5),
-    dplyr (>= 1.1.4),
-    tibble (>= 3.2.1),
-    tidyr (>= 1.3.1),
-    tidyselect (>= 1.2.1),
-    stats (>= 3.6.2),
-    utils (>= 3.6.2),
-    pracma (>= 2.4.4),
-    stringr (>= 1.5.1),
-    ggplot2 (>= 3.5.0),
-    scales (>= 1.3.0),
-    parallel (>= 3.6.2),
-    purrr (>= 1.0.2),
-    DNAcopy (>= 1.72.0),
-    GenomicRanges (>= 1.50.2)
+    readr,
+    dplyr,
+    tibble,
+    tidyr,
+    tidyselect,
+    stats,
+    utils,
+    pracma,
+    stringr,
+    ggplot2,
+    ggbeeswarm,
+    ggh4x,
+    gtools,
+    scales,
+    parallel,
+    purrr,
+    DNAcopy,
+    GenomicRanges,
+    IRanges,
+    S4Vectors,
+    rlang
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Depends: 
-    R (>= 2.10)
+    R (>= 3.5)
 LazyData: true
+URL: https://beroukhim-lab.github.io/RtangentXY/
