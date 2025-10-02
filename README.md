@@ -6,7 +6,7 @@
 
 # Installation
 
-To install `TangentXY`, you'll need either the `remotes` or `devtools` package.
+To install `TangentXY`, you'll need either the `remotes` or `devtools` package:
 
 ```r
 remotes::install_github("beroukhim-lab/RtangentXY")
