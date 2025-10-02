@@ -8,10 +8,10 @@
 #' Plot signal along genome before and after TangentXY normalization
 #' 
 #' @inheritParams run_tangent
+#' @param tnorm A normalized tumor signal matrix output by \code{\link{run_tangent}}, or a list of such matrices.
 #' @param sample_id Sample ID to plot
 #' @param pif_df Tibble or filepath to a text file containing probe information.
 #' Should have a 'chr' column with chromosome names (1-22, X, Y) and an 'arm' column with arm names (p or q)
-#' @param tnorm A normalized tumor signal matrix output by \code{\link{run_tangent}}, or a list of such matrices
 #' @param n_latent A numeric vector of the numbers of latent factors used in TangentXY normalization.
 #' Should correspond to the elements in `tnorm`.
 #' @param output_dir Directory to save the plot. If `NULL`, the plot will be printed to the screen.
@@ -21,13 +21,13 @@
 #' tangent_res <- lapply(n_latent, function(nlf) {
 #'   run_tangent(example_sif, example_nsig_df, example_tsig_df, nlf, make_plots = FALSE)
 #' })
-#' plot_signal_along_loci("tumor.female2", example_pif,
-#'                        example_tsig_df, tangent_res, n_latent = n_latent)
+#' plot_signal_along_loci(tangent_res, "tumor.female2", example_pif,
+#'                        example_tsig_df, n_latent = n_latent)
 #'
 #' @returns (Invisibly) A ggplot object containing the signal profiles for the sample before and after normalization.
 #'
 #' @export
-plot_signal_along_loci <- function(sample_id, pif_df, tsig_df, tnorm, n_latent, output_dir = NULL) {
+plot_signal_along_loci <- function(tnorm, sample_id, pif_df, tsig_df, n_latent, output_dir = NULL) {
   options(dplyr.summarise.inform = FALSE)
   if (!inherits(tnorm, "list")) {
     tnorm <- list(tnorm)

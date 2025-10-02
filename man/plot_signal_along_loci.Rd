@@ -5,23 +5,23 @@
 \title{Plot signal along genome before and after TangentXY normalization}
 \usage{
 plot_signal_along_loci(
+  tnorm,
   sample_id,
   pif_df,
   tsig_df,
-  tnorm,
   n_latent,
   output_dir = NULL
 )
 }
 \arguments{
+\item{tnorm}{A normalized tumor signal matrix output by \code{\link{run_tangent}}, or a list of such matrices.}
+
 \item{sample_id}{Sample ID to plot}
 
 \item{pif_df}{Tibble or filepath to a text file containing probe information.
 Should have a 'chr' column with chromosome names (1-22, X, Y) and an 'arm' column with arm names (p or q)}
 
 \item{tsig_df}{Tibble or filepath to a text file containing the tumor signal matrix}
-
-\item{tnorm}{A normalized tumor signal matrix output by \code{\link{run_tangent}}, or a list of such matrices}
 
 \item{n_latent}{A numeric vector of the numbers of latent factors used in TangentXY normalization.
 Should correspond to the elements in \code{tnorm}.}
@@ -39,7 +39,7 @@ n_latent <- c(5, 10)
 tangent_res <- lapply(n_latent, function(nlf) {
   run_tangent(example_sif, example_nsig_df, example_tsig_df, nlf, make_plots = FALSE)
 })
-plot_signal_along_loci("tumor.female2", example_pif,
-                       example_tsig_df, tangent_res, n_latent = n_latent)
+plot_signal_along_loci(tangent_res, "tumor.female2", example_pif,
+                       example_tsig_df, n_latent = n_latent)
 
 }
