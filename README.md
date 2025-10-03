@@ -1,92 +1,108 @@
-# TangentXY R Package
+# TangentXY
 
-An easy-to-use package containing functions that run TangentXY and PseudotangentXY, sex-informed extensions of the existing Tangent and PseudoTangent inference pipelines.
+# Overview
 
-## Table of Contents
+`TangnetXY` is a sex-informed copy number inference algorithm which extends Tangent (PMID: 36040167).
 
--   [Cite](#cite)
--   [Installation](#installation)
--   [Usage](#usage)
--   [Support](#support)
--   [Versions](#versions)
+# Installation
 
+To install `TangentXY`, you'll need either the `remotes` or `devtools` package:
 
-## Cite
+```r
+remotes::install_github("beroukhim-lab/RtangentXY")
+```
+
+# Usage
+
+For more detailed function documentation, please see <https://beroukhim-lab.github.io/RtangentXY/>
+
+The inputs to the tangent algorithm are as follows:
+
+1. Normal sample signal matrix with values in log2(Relative Copy Number) format
+2. Tumor sample signal matrix with values in log2(Relative Copy Number) format
+3. Probe information file
+4. Sample information file 
+
+The package comes with example datasets to demonstrate the expected format of each input. 
+
+## Tangent
+
+```r
+# Filter out common germline CNVs
+probes_filt <- filter_blacklist(example_pif)
+nsig_df <- example_nsig_df %>% filter(locus %in% probes_filt$locus)
+tsig_df <- example_tsig_df %>% filter(locus %in% probes_filt$locus)
+
+# Diagnostic plot to select number of latent factors
+plot_latent_factor_importance(
+  sif_df  = example_sif,
+  nsig_df = nsig_df,
+  tsig_df = tsig_df
+)
+
+# Run tangent
+n_latent <- 5
+tangent_res <- run_tangent(
+  sif_df   = example_sif,
+  nsig_df  = nsig_df,
+  tsig_df  = tsig_df,
+  n_latent = n_latent
+)
+
+# Plot signal and noise profiles before and after normalization
+plot_signal_noise(
+  tnorm    = tangent_res,
+  sif_df   = example_sif,
+  pif_df   = probes_filt,
+  tsig_df  = tsig_df,
+  n_latent = n_latent
+)
+
+# Plot signal profile before and after tangent normalization for a given sample
+plot_signal_along_loci(
+  tnorm     = tangent_res,
+  sample_id = "tumor.female1",
+  pif_df    = probes_filt,
+  tsig_df   = tsig_df,
+  n_latent  = n_latent
+)
+```
+
+## Segmentation
+
+The tangent pipeline outputs a normalized signal matrix which can then be used as input
+for Circular Binary Segmentation (CBS):
+
+```r
+# Run CBS
+cbs <- run_cbs(tangent_res, n_cores = 5)
+
+# Save results to disk
+save_segmentation(cbs, output_dir = ".")
+```
+
+## Pseudotangent
+
+When relatively few normal samples are available, the pseudotangent algorithm may
+be more appropriate.
+
+```r
+ptangent_res <- run_pseudotangent(
+  sif_df         = example_sif,
+  nsig_df        = nsig_df,
+  tsig_df        = tsig_df,
+  n_latent_init  = 5,
+  num_partitions = 3,
+  n_latent_part  = 3
+)
+```
+
+# Support
+
+Please [open an issue](https://github.com/beroukhim-lab/RtangentXY/issues/new) for support.
+
+# Citation
 
 These are the research papers associated with `RtangentXY`:
 
 * Gao GF, Oh C, Saksena G, Deng D, Westlake LC, Hill BA, Reich M, Schumacher SE, Berger AC, Carter SL, Cherniack AD, Meyerson M, Tabak B, Beroukhim R, Getz G. Tangent normalization for somatic copy-number inference in cancer genome analysis. Bioinformatics. 2022 Oct 14;38(20):4677-4686. doi: 10.1093/bioinformatics/btac586. PMID: 36040167; PMCID: PMC9563697.
-
-## Installation
-
-Check the `RtangentXY/DESCRIPTION` file for the list of all imports. This is an R package, so it should be able to run on any device with R installed. We recommend using the latest version of R, as some of the dependencies may require more recent versions of R. Check [this link](https://cran.r-project.org/web/packages/githubinstall/vignettes/githubinstall.html) for instructions on installing an R package from GitHub.
-
-We will present one way to install this package. First download this repository into your workspace:
-
-```sh
-git clone git@github.com:beroukhim-lab/RtangentXY.git
-cd RtangentXY
-```
-
-You can then install `RtangentXY` by running the following commands in an R environment, within the `/RtangentXY` directory:
-
-```r
-install.packages("devtools")
-devtools::install()
-```
-
-You can then test if the package and dependencies were properly installed by running the following command in an R environment, within the same `/RtangentXY` directory:
-
-```r
-devtools::test()
-```
-
-## Expected Inputs
-
-SIF File
-
-PIF File
-
-Tumor Signal File
-
-Normal Signal File
-
-Check  `/tests/testthat/dummydata/raw_inputs/` for how the data should be formatted. Errors may occur due to formatting, so ensuring that the column and row information matches the given format is essential. 
-
-## Usage
-
-Once this package is installed, load the package by calling:
-
-```r
-library(RtangentXY)
-```
-
-If you have a subset of normal samples, we suggest running Tangent.
-
-```r
-filter_blacklist(...) %>%
-run_tangent(...) %>%
-run_cbs(...) %>%
-save_segmentation(...)
-```
-
-If the set of normals is particularly non-representative, we suggest running PseudoTangent.
-
-```r
-filter_blacklist(...) %>%
-run_pseudotangent(...) %>%
-run_cbs(...) %>%
-save_segmentation(...)
-```
-
-Both of these workflows will output [segemented copy number](https://igv.org/web/snapshot/examples/copyNumber.html) text files. If instead you want a list of `DNAcopy` objects, each element of which represents the segmentation data from an input tumor sample (and can be plotted using `DNAcopy` package functions), you may choose not to run `save_segmentation(...)`.
-
-## Support
-
-Please [open an issue](https://github.com/beroukhim-lab/RtangentXY/issues/new) for support.
-
-## Versions
-
-0.0.1
-
--   Pre-release version
