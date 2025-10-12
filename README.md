@@ -22,13 +22,13 @@ BiocManager::install(c("S4Vectors", "IRanges", "GenomicRanges", "DNAcopy"))
 
 To install dependencies using conda or mamba:
 
-```bash
+```console
 conda create -n tangentxy -c r -c bioconda r-readr r-dplyr r-tibble r-tidyr r-tidyselect \
   r-pracma r-stringr r-ggplot2 r-ggbeeswarm r-ggh4x r-gtools r-scales r-purrr r-rlang \
   bioconductor-s4vectors bioconductor-iranges bioconductor-genomicranges bioconductor-dnacopy
 ```
 
-```bash
+```console
 conda activate tangentxy
 ```
 
