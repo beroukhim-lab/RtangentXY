@@ -56,9 +56,30 @@
 <div class="section level1">
 <h1 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h1>
-<p>To install <code>TangentXY</code>, you’ll need either the <code>remotes</code> or <code>devtools</code> package:</p>
+<div class="section level2">
+<h2 id="dependencies">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies"></a>
+</h2>
+<p>To install dependencies using R:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"beroukhim-lab/RtangentXY"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"readr"</span>, <span class="st">"dplyr"</span>, <span class="st">"tibble"</span>, <span class="st">"tidyr"</span>, <span class="st">"tidyselect"</span>, <span class="st">"pracma"</span>,</span>
+<span><span class="st">"stringr"</span>, <span class="st">"ggplot2"</span>, <span class="st">"ggbeeswarm"</span>, <span class="st">"ggh4x"</span>, <span class="st">"gtools"</span>, <span class="st">"scales"</span>, <span class="st">"purrr"</span>, <span class="st">"rlang"</span>,</span>
+<span> <span class="st">"BiocManager"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"S4Vectors"</span>, <span class="st">"IRanges"</span>, <span class="st">"GenomicRanges"</span>, <span class="st">"DNAcopy"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>To install dependencies using conda or mamba:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> tangentxy <span class="at">-c</span> r <span class="at">-c</span> bioconda r-readr r-dplyr r-tibble r-tidyr r-tidyselect <span class="dt">\</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  r-pracma r-stringr r-ggplot2 r-ggbeeswarm r-ggh4x r-gtools r-scales r-purrr r-rlang <span class="dt">\</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  bioconductor-s4vectors bioconductor-iranges bioconductor-genomicranges bioconductor-dnacopy</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="ex">conda</span> activate tangentxy</span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="tangnetxy">TangnetXY<a class="anchor" aria-label="anchor" href="#tangnetxy"></a>
+</h2>
+<p>To install <code>TangentXY</code>, you’ll need either the <code>remotes</code> or <code>devtools</code> package:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"beroukhim-lab/RtangentXY"</span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level1">
 <h1 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
@@ -75,11 +96,14 @@
 <div class="section level2">
 <h2 id="tangent">Tangent<a class="anchor" aria-label="anchor" href="#tangent"></a>
 </h2>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Filter out common germline CNVs</span></span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://beroukhim-lab.github.io/RtangentXY/">RtangentXY</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Filter out common germline CNVs</span></span>
 <span><span class="va">probes_filt</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/filter_blacklist.html">filter_blacklist</a></span><span class="op">(</span><span class="va">example_pif</span><span class="op">)</span></span>
-<span><span class="va">nsig_df</span> <span class="op">&lt;-</span> <span class="va">example_nsig_df</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">locus</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">probes_filt</span><span class="op">$</span><span class="va">locus</span><span class="op">)</span></span>
-<span><span class="va">tsig_df</span> <span class="op">&lt;-</span> <span class="va">example_tsig_df</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">locus</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">probes_filt</span><span class="op">$</span><span class="va">locus</span><span class="op">)</span></span>
+<span><span class="va">nsig_df</span> <span class="op">&lt;-</span> <span class="va">example_nsig_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">locus</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">probes_filt</span><span class="op">$</span><span class="va">locus</span><span class="op">)</span></span>
+<span><span class="va">tsig_df</span> <span class="op">&lt;-</span> <span class="va">example_tsig_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">locus</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">probes_filt</span><span class="op">$</span><span class="va">locus</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Diagnostic plot to select number of latent factors</span></span>
 <span><span class="fu"><a href="reference/plot_latent_factor_importance.html">plot_latent_factor_importance</a></span><span class="op">(</span></span>
@@ -119,7 +143,7 @@
 <h2 id="segmentation">Segmentation<a class="anchor" aria-label="anchor" href="#segmentation"></a>
 </h2>
 <p>The tangent pipeline outputs a normalized signal matrix which can then be used as input for Circular Binary Segmentation (CBS):</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run CBS</span></span>
 <span><span class="va">cbs</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/run_cbs.html">run_cbs</a></span><span class="op">(</span><span class="va">tangent_res</span>, n_cores <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span></span>
@@ -130,7 +154,7 @@
 <h2 id="pseudotangent">Pseudotangent<a class="anchor" aria-label="anchor" href="#pseudotangent"></a>
 </h2>
 <p>When relatively few normal samples are available, the pseudotangent algorithm may be more appropriate.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ptangent_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/run_pseudotangent.html">run_pseudotangent</a></span><span class="op">(</span></span>
 <span>  sif_df         <span class="op">=</span> <span class="va">example_sif</span>,</span>
 <span>  nsig_df        <span class="op">=</span> <span class="va">nsig_df</span>,</span>
