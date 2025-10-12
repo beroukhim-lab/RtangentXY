@@ -6,9 +6,33 @@
 
 # Installation
 
+## Dependencies
+
+To install dependencies using R:
+
+```r
+install.packages(c("readr", "dplyr", "tibble", "tidyr", "tidyselect", "pracma",
+"stringr", "ggplot2", "ggbeeswarm", "ggh4x", "gtools", "scales", "purrr", "rlang",
+ "BiocManager"))
+BiocManager::install(c("S4Vectors", "IRanges", "GenomicRanges", "DNAcopy"))
+```
+
+To install dependencies using conda or mamba:
+
+```bash
+conda create -n tangentxy -c r -c bioconda r-readr r-dplyr r-tibble r-tidyr r-tidyselect \
+  r-pracma r-stringr r-ggplot2 r-ggbeeswarm r-ggh4x r-gtools r-scales r-purrr r-rlang \
+  bioconductor-s4vectors bioconductor-iranges bioconductor-genomicranges bioconductor-dnacopy
+
+conda activate tangentxy
+```
+
+## TangnetXY
+
 To install `TangentXY`, you'll need either the `remotes` or `devtools` package:
 
 ```r
+install.packages("remotes")
 remotes::install_github("beroukhim-lab/RtangentXY")
 ```
 
@@ -28,6 +52,9 @@ The package comes with example datasets to demonstrate the expected format of ea
 ## Tangent
 
 ```r
+library(RtangentXY)
+library(dplyr)
+
 # Filter out common germline CNVs
 probes_filt <- filter_blacklist(example_pif)
 nsig_df <- example_nsig_df %>% filter(locus %in% probes_filt$locus)
